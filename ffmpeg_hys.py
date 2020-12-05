@@ -286,7 +286,7 @@ if __name__ == "__main__":
     #                     /data/part5_convert.ts|
     #                     /data/part6_convert.ts|
     #                     /data/part7_convert.ts"
-    #      -map 0:0 -c:v:0 copy -map 0:1 -c:a:0 copy -pat_period 0.1 -sdt_period 1.2 -pcr_period 40 -muxrate 0 -f mpegts /output/whole.ts
+    #      -map 0:0 -c:v:0 copy -map 0:1 -c:a:0 copy -pat_period 0.1 -sdt_period 1.2 -pcr_period 40 -muxrate 0 -f mpegts d:/otest/whole.ts
     #
     map_str = ' -map 0:0 -c:v:0 copy -map 0:1 -c:a:0 copy '
     mux_str = ' -pat_period 0.1 -sdt_period 1.2 -pcr_period 40 -muxrate 0 '
