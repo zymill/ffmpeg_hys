@@ -1,0 +1,5 @@
+file 'file:E:/material/ffmpeg_hys_python/hls_part/h264_part0.ts'
+file 'file:E:/material/ffmpeg_hys_python/hls_part/h264_part1.ts'
+file 'file:E:/material/ffmpeg_hys_python/hls_part/h264_part2.ts'
+file 'file:E:/material/ffmpeg_hys_python/hls_part/h264_part3.ts'
+file 'file:E:/material/ffmpeg_hys_python/hls_part/h264_part4.ts'
