@@ -1,2 +1,2 @@
-# hysAnalyser
-analyse transport stream files(MPEG-2 system)
+# ffmpeg_hys
+run ffmpeg by Python or bat files on windows
