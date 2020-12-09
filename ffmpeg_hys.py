@@ -19,7 +19,7 @@
 #* GNU General Public License for more details.
 #*
 #*****************************************************************************
-#* Last update Date: 2020-12-03 21:30:25           version: 0.0.1
+#* Last update Date: 2020-12-09 23:05:25           version: 0.0.2
 #*****************************************************************************
 #*/
 
@@ -132,6 +132,10 @@ flag_segment_hls_spts = False
 flag_segment_mp4      = False
 flag_concat_mpegts    = False
 flag_live_flv_stream  = False
+
+flag_vf_overlay_logos = False
+flag_vf_drawtext = False
+flag_vf_overlay_drawtext_delogo = False
 
 #################################################################################
 # check dst_path, create it if not found
@@ -299,6 +303,40 @@ if __name__ == "__main__":
     cmd = 'ffmpeg -re -stream_loop -1 ' + log_param + input_ts_file + ' -vcodec copy -acodec aac -ar 48000 -ac 2 -b:a 64k -f flv "rtmp://192.168.128.111:1935/myapp/stream1" '
     ffmpeg_run(log, cmd, flag_live_flv_stream, 'case_live_flv_stream')
 
+    # 10 overlay image logos(png/bmp/webp/gif/jpeg) , draw text and delogo
+    #   ffmpeg "
+    #   ffmpeg -fflags +genpts -i main_video.mkv -i logo1.png -i logo2.jpg -max_muxing_queue_size 256
+    #          -filter_complex "[0:v][1:v]overlay=40:40[bkg1];[bkg1][2:v]overlay=200:40,"\
+    #          "drawtext=fontfile=/fonts/mingliu.ttc:text='hybase@qq.com 视频水印1':x=50:y=450:fontsize=32:fontcolor=0xFFEE00@0.7:shadowy=-1,"\
+    #          "drawtext=fontfile=/fonts/mingliu.ttc:text='hybase@qq.com 视频水印2':x=350:y=450:fontsize=32:fontcolor=0xFFEE00@0.7:shadowy=-1,"\
+    #          "delogo=w=200:h=80:x=1000:y=50" \
+    #          -map 0:0 -c:v:0 libx264 -s 1280x720 -b:v:0 1500000 -minrate 1500000 -maxrate 3000000 -bufsize 1500000 -g 25 -bf 1 -pix_fmt yuv420p -r:v:0 25.000000 \
+    #          -map 0:1 -c:a:0 aac -ab:a:0 64k -ar:a:0 48000 -ac:a:0 2 -vol:a:0 256 \
+    #          -map 0:1 -c:a:1 ac3 -ab:a:1 128k -ar:a:1 48000 -ac:a:1 2 -vol:a:1 256 \
+    #          -muxrate 0 -f mpegts d:/output.ts
+    
+    png_logo  = ' -i e:/material/image/logo/jxtv_96x96.png '
+    jpg_logo  = ' -i e:/material/image/logo/jxtv_96x96.jpg '
+    drawtext1 = '''drawtext=fontfile=c:/Windows/Fonts/msyh.ttf:text='hybase@qq.com视频水印1':x=50:y=550:fontsize=36:fontcolor=0xFFFF00@0.7:shadowy=-1,'''
+    drawtext2 = '''drawtext=fontfile=c:/Windows/Fonts/msyh.ttf:text='hybase@qq.com视频水印2':x=50:y=650:fontsize=36:fontcolor=0xFFFF00@0.7:shadowy=-1'''
+    delogo_str= 'delogo=w=200:h=80:x=1000:y=50'
+    video_param_str = ' -map 0:0 -c:v:0 libx264 -s 1280x720 -b:v:0 1500000 -minrate 1500000 -maxrate 3000000 -bufsize 1500000 -g 25 -bf 1 -pix_fmt yuv420p -r:v:0 25.000000 '
+    aac_str = ' -map 0:1 -c:a:0 aac -ab:a:0 64k -ar:a:0 48000 -ac:a:0 2 -vol:a:0 256 '
+    ac3_str = ' -map 0:1 -c:a:1 ac3 -ab:a:1 128k -ar:a:1 48000 -ac:a:1 2 -vol:a:1 256 '
+    mux_str = ' -muxrate 0 -pat_period 0.1 -sdt_period 1.2 '
+    
+    cmd1 = 'ffmpeg -y -fflags +genpts ' + log_param + input_ts_file + png_logo + jpg_logo + ' -max_muxing_queue_size 256 -filter_complex ' + \
+           '[0:v][1:v]overlay=60:40[bkg1];[bkg1][2:v]overlay=200:40,' + video_param_str + aac_str + ac3_str +\
+            mux_str + ' -f mpegts d:/otest/case017_filter_complex_overlay_drawtexts.ts '
+    cmd2 = 'ffmpeg -y -fflags +genpts ' + log_param + input_ts_file + ' -max_muxing_queue_size 256 -filter_complex ' + \
+            drawtext1 + drawtext2 + video_param_str + aac_str + ac3_str + mux_str + ' -f mpegts d:/otest/case018_filter_complex_drawtexts.ts '
+    cmd3 = 'ffmpeg -y -fflags +genpts ' + log_param + input_ts_file + png_logo + jpg_logo + ' -max_muxing_queue_size 256 -filter_complex ' + \
+           '[0:v][1:v]overlay=60:40[bkg1];[bkg1][2:v]overlay=200:40,' + drawtext1 + drawtext2 + video_param_str + aac_str + ac3_str +\
+            mux_str + ' -f mpegts d:/otest/case019_filter_complex_overlay_drawtext_delogo.ts '
+    ffmpeg_run(log, cmd1, flag_vf_overlay_logos, 'case_vf_overlay_logos')
+    ffmpeg_run(log, cmd2, flag_vf_drawtext, 'case_vf_drawtext')
+    ffmpeg_run(log, cmd3, flag_vf_overlay_drawtext_delogo, 'case_vf_overlay_drawtext_delogo') 
+    
     log.logger.info("=== all cases run ===")
     log.logger.info("============ program exit ============")
     sys.exit(0)
