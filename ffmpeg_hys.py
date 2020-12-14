@@ -595,8 +595,7 @@ if __name__ == "__main__":
     af_str = " atempo=0.5"
     ffmpeg_af_run(log, af_str, 'd:/otest/case061_af_atempo.mp4', flag_af_atempo, 'case_af_atempo')
     # 54 chorus 和声
-    # | ^ " &等字符是特殊字符。
-    # 如果特殊字符出现在双引号外，需要被转义。但如果出现在双引号中，就不需要也不能被转义。
+    # | ^ " &等字符是特殊字符
     # 转义时，^^代表^，^|代表|，^"代表"等等
     #af_str = ''' chorus=0.7:0.9:55:0.4:0.25:2'''
     #af_str = ''' chorus='0.6:0.9:50^|60:0.4^|0.32:0.25^|0.4:2^|1.3' '''
