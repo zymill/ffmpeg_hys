@@ -292,8 +292,8 @@ if __name__ == "__main__":
     #   ffmpeg -y -i e:/material/tt.mkv -c:v:0 libx264 -s 640x360 -bf 2 -g 25 -b:v:0 1000k -minrate 1000k -maxrate 1000k -bufsize 1000k -c:a:0 aac -b:a:0 64k\
     #   -muxrate 1250k -muxdelay 0.85 -pcr_period 33 -pat_period 0.1 -sdt_period 1.2 -f mpegts d:/tt_h264_aac_cbr.ts
     #
-    cmd1 = 'ffmpeg ' + log_param + input_mkv_file + ' -vcodec libx264 -s 640x360 -bf 2 -g 25 -acodec aac  -max_muxing_queue_size 256 -f mp4 d:/case005_trc_h264_aac.mp4 '
-    cmd2 = 'ffmpeg ' + log_param + input_mkv_file + ' -vcodec libx265 -preset medium -s 640x360 -bf 2 -g 25 -acodec aac -max_muxing_queue_size 256 -f mp4 d:/case006_trc_hevc_aac.mp4 '
+    cmd1 = 'ffmpeg ' + log_param + input_mkv_file + ' -vcodec libx264 -s 640x360 -bf 2 -g 25 -acodec aac  -max_muxing_queue_size 256 -f mp4 d:/otest/case005_trc_h264_aac.mp4 '
+    cmd2 = 'ffmpeg ' + log_param + input_mkv_file + ' -vcodec libx265 -preset medium -s 640x360 -bf 2 -g 25 -acodec aac -max_muxing_queue_size 256 -f mp4 d:/otest/case006_trc_hevc_aac.mp4 '
     cmd3 = 'ffmpeg ' + log_param + ' -c:v h264_cuvid -gpu 0 ' + input_mkv_file + ' -c:v:0 h264_nvenc -gpu any -s 640x360 -g 25 -acodec copy  -max_muxing_queue_size 256 -f mp4 d:/otest/case007_trc_nv_h264_aac.mp4 '
     cmd4 = 'ffmpeg ' + log_param + ' -c:v h264_cuvid -gpu 0 ' + input_mkv_file + ' -c:v:0 hevc_nvenc -gpu any -s 640x360 -g 25 -acodec copy  -max_muxing_queue_size 256 -f mp4 d:/otest/case008_trc_nv_hevc_aac.mp4 '
     cmd5 = 'ffmpeg ' + log_param + input_mkv_file + ' -c:v:0 libx264 -s 640x360 -bf 2 -g 25 -b:v:0 1000k -minrate 1000k -maxrate 1000k -bufsize 1000k -c:a:0 aac -b:a:0 64k -max_muxing_queue_size 256 -muxrate 1250k -muxdelay 0.85 -pcr_period 33 -pat_period 0.1 -sdt_period 1.2 -f mpegts d:/otest/case009_trc_h264_aac_cbr.ts '
@@ -314,7 +314,7 @@ if __name__ == "__main__":
     #   ffmpeg -y -i e:/material/tt.mkv -bsf:v h264_mp4toannexb -vcodec copy -an es_h264.h264
     #   ffmpeg -y -i e:/material/tt.mkv -acodec copy -vn es_aac.aac
     cmd1 = 'ffmpeg ' + log_param + input_mkv_file + ' -bsf:v h264_mp4toannexb -vcodec copy -an d:/otest/case011_es_h264.h264 '
-    cmd2 = 'ffmpeg ' + log_param + input_mkv_file + ' -acodec copy -vn d:/case012_es_aac.aac '
+    cmd2 = 'ffmpeg ' + log_param + input_mkv_file + ' -acodec copy -vn d:/otest/case012_es_aac.aac '
     ffmpeg_run(log, cmd1, flag_extract_video_es, 'case_extract_video_es')
     ffmpeg_run(log, cmd2, flag_extract_audio_es, 'case_extract_audio_es')
 
