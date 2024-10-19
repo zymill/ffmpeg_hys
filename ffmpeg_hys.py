@@ -4,8 +4,7 @@
 #***************************************************************************
 #* Copyright (c) 2020-2020 Hybase@qq.com
 #*
-#* Author: hybase@qq.com  QQ:23207689  WebChat: hybase
-#*         http://blog.csdn.net/zymill
+#* Author: hybase@qq.com
 #*         http://github.com/zymill
 #*
 #* This program is free software: you can redistribute it and/or modify
